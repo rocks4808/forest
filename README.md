@@ -9,6 +9,8 @@ CanopyIntel is an enterprise-grade environmental intelligence system engineered 
 
 Built following the rigorous specifications of `PRD.md`, CanopyIntel enforces strict **zero-leakage temporal cross-validation**, residual target modeling, physical mass-balance conservation, and an editorial **Deep Dark Forest** visual design system.
 
+> **Judges & Evaluators:** Please see the [**Judge & Evaluator Guide (EVALUATOR_GUIDE.md)**](file:///EVALUATOR_GUIDE.md) for a 60-second summary, rubric alignment matrix, and defenses for anticipated Q&A.
+
 ---
 
 ## 🌲 Key Features
