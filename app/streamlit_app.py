@@ -1,10 +1,10 @@
 """CanopyIntel - Forest Loss Prediction & Deforestation Hotspot System.
 
-Hackathon & Academic Evaluation Edition:
+Academic Evaluation & Competition Edition:
 A unified, one-shot dashboard showcasing:
-- Executive problem statement and operational value
-- Mathematical rigor & why this approach beats naive baselines
-- Full accuracy scorecard (MAE, RMSE, R2, sMAPE, MASE, Macro-F1, Confusion Matrix)
+- Problem context & operational conservation value
+- Mathematical rationale: why this formulation beats naive panel persistence
+- Master accuracy scorecard (MAE, RMSE, R2, sMAPE, MASE, Macro-F1, Confusion Matrix)
 - 73 engineered features & TreeSHAP explainability
 - End-to-end reproducible pipeline architecture
 - Live in-page What-If policy & climate simulator
@@ -47,7 +47,7 @@ from app.components import (
 from src.features import build_features
 
 st.set_page_config(
-    page_title="CanopyIntel | Hackathon ML Showcase",
+    page_title="CanopyIntel | Forest Loss Intelligence",
     page_icon="🌲",
     layout="wide",
     initial_sidebar_state="expanded",
@@ -66,34 +66,30 @@ models = load_trained_models()
 eda_summary = load_eda_summary()
 
 if df_hist.empty or df_hotspots.empty:
-    st.error("⚠️ Model artifacts or reports not found. Please run `python -m src.train` first.")
+    st.error("Model artifacts or reports not found. Please execute: python -m src.train")
     st.stop()
 
 # -------------------------------------------------------------------
-# Hackathon Header & Value Proposition
+# Editorial Masthead & Value Proposition
 # -------------------------------------------------------------------
 st.markdown(
     """
-    <div style="background: linear-gradient(135deg, #121E18 0%, #1A2C23 100%); border: 1px solid #24382D; border-radius: 12px; padding: 22px 26px; margin-bottom: 22px;">
-        <div style="display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 12px;">
-            <div>
-                <div style="display: flex; gap: 8px; align-items: center; margin-bottom: 8px; flex-wrap: wrap;">
-                    <span style="background: #24382D; color: #7FB069; font-family: 'IBM Plex Mono', monospace; font-size: 0.72rem; padding: 3px 9px; border-radius: 4px; border: 1px solid #7FB069;">🏆 HACKATHON & ACADEMIC JURY SHOWCASE</span>
-                    <span style="background: #16241D; color: #E9E6DA; font-family: 'IBM Plex Mono', monospace; font-size: 0.72rem; padding: 3px 9px; border-radius: 4px; border: 1px solid #24382D;">🎯 SEED 42 DETERMINISTIC</span>
-                    <span style="background: #16241D; color: #7FB069; font-family: 'IBM Plex Mono', monospace; font-size: 0.72rem; padding: 3px 9px; border-radius: 4px; border: 1px solid #7FB069;">⚡ BEATS PERSISTENCE (MASE 0.9618)</span>
-                    <span style="background: #16241D; color: #9FB0A4; font-family: 'IBM Plex Mono', monospace; font-size: 0.72rem; padding: 3px 9px; border-radius: 4px; border: 1px solid #24382D;">🛡️ ZERO DATA LEAKAGE</span>
-                    <span style="background: #16241D; color: #9FB0A4; font-family: 'IBM Plex Mono', monospace; font-size: 0.72rem; padding: 3px 9px; border-radius: 4px; border: 1px solid #24382D;">🌲 MASS BALANCE PRESERVED</span>
-                </div>
-                <h1 style="font-family: 'Newsreader', Georgia, serif; font-size: 2.1rem; color: #E9E6DA; margin: 0 0 6px 0; font-weight: 600;">
-                    CanopyIntel: Forest Loss Prediction & Deforestation Hotspot System
-                </h1>
-                <p style="color: #9FB0A4; font-size: 0.96rem; margin: 0; max-width: 950px; line-height: 1.5;">
-                    An enterprise environmental intelligence platform predicting subnational canopy loss rates (<span style="color: #7FB069; font-family: 'IBM Plex Mono';">Task A</span>), 
-                    classifying degradation severity (<span style="color: #7FB069; font-family: 'IBM Plex Mono';">Task B</span>), 
-                    and simulating multi-year policy & climate scenarios to 2030 (<span style="color: #7FB069; font-family: 'IBM Plex Mono';">Task C</span>) across 50 subnational jurisdictions (2005–2024).
-                </p>
-            </div>
+    <div class="masthead-container">
+        <div class="masthead-meta-row">
+            <span class="masthead-pill masthead-pill-accent">EVALUATION &amp; BENCHMARK SHOWCASE</span>
+            <span class="masthead-pill masthead-pill-accent">SEED 42 DETERMINISTIC</span>
+            <span class="masthead-pill masthead-pill-accent">BEATS PERSISTENCE (MASE 0.9618)</span>
+            <span class="masthead-pill">ZERO DATA LEAKAGE</span>
+            <span class="masthead-pill">PHYSICAL MASS BALANCE PRESERVED</span>
         </div>
+        <h1 class="masthead-title">
+            CanopyIntel: Subnational Forest Loss Prediction &amp; Hotspot Prioritization
+        </h1>
+        <p class="masthead-description">
+            An environmental intelligence system engineered to forecast annual forest loss rates (Task A), 
+            classify degradation severity (Task B), and project recursive 2025–2030 canopy trajectories under 
+            five policy and climate pathways (Task C) across 50 subnational jurisdictions spanning 2005 to 2024.
+        </p>
     </div>
     """,
     unsafe_allow_html=True,
@@ -116,7 +112,7 @@ with col_k1:
         value=f"{test_mae:.4f}%",
         delta=f"{delta_mae:.2f}% vs Persistence",
         delta_type="good",
-        tooltip="Mean Absolute Error on untouched 100-sample test set (2023-2024 targets)",
+        tooltip="Mean Absolute Error on untouched holdout test set (2023-2024 targets, N=100)",
     )
 
 with col_k2:
@@ -127,7 +123,7 @@ with col_k2:
         value=f"{r2_score:.4f}",
         delta=f"RMSE {rmse_score:.4f}%",
         delta_type="good",
-        tooltip="Out-of-sample coefficient of determination on test set",
+        tooltip="Out-of-sample coefficient of determination on holdout test set",
     )
 
 with col_k3:
@@ -138,7 +134,7 @@ with col_k3:
         value=f"{mase_val:.4f}",
         delta=f"sMAPE {smape_val:.2f}% (<1.0 is superior)",
         delta_type="good",
-        tooltip="Mean Absolute Scaled Error relative to naive persistence baseline. Values < 1.0 mathematically prove model superiority.",
+        tooltip="Mean Absolute Scaled Error relative to naive persistence baseline. Values below 1.0 prove model skill over persistence.",
     )
 
 with col_k4:
@@ -158,25 +154,25 @@ with col_k5:
     kpi_card(
         label="Adjacent-Class Accuracy",
         value=f"{adj_acc*100:.1f}%",
-        delta=f"0 Fatal Misses · {crit_count} Critical",
+        delta=f"0 Severe Misses · {crit_count} Critical",
         delta_type="good",
-        tooltip="Accuracy allowing +/- 1 ordinal class deviation. Zero Critical/High regions are ever misclassified as Low.",
+        tooltip="Accuracy allowing +/- 1 ordinal tier deviation. Zero High-severity jurisdictions are misclassified as Low.",
     )
 
 st.markdown("<br>", unsafe_allow_html=True)
 
 # -------------------------------------------------------------------
-# The "Why This is the Best Approach" Rationale Banner
+# The "Why This is the Best Approach" Architectural Defense
 # -------------------------------------------------------------------
-with st.expander("💡 **Why is this the mathematically superior ML approach? (Click to view the 4 architectural pillars)**", expanded=True):
+with st.expander("Why CanopyIntel is the mathematically defensible approach for panel data", expanded=True):
     col_p1, col_p2, col_p3, col_p4 = st.columns(4)
     with col_p1:
         st.markdown(
             """
-            <div style="background: #16241D; border: 1px solid #24382D; box-shadow: inset 0 1px 0 0 rgba(127, 176, 105, 0.25); padding: 12px 14px; border-radius: 8px;">
-                <div style="font-family: 'Newsreader', Georgia, serif; color: #7FB069; font-size: 0.98rem; font-weight: 600;">1. Residual Log-Ratio Learning</div>
-                <p style="color: #9FB0A4; font-size: 0.82rem; margin: 4px 0 0 0; line-height: 1.4;">
-                    Forest loss has extreme lag-1 autocorrelation (r = 0.925). Naive models memorize persistence. We predict the multiplicative acceleration <span style="color: #E9E6DA; font-family: monospace;">z = ln(y_{t+1}/y_t)</span>, forcing tree models to learn true turning points.
+            <div class="pillar-card">
+                <div class="pillar-title">1. Residual Log-Ratio Learning</div>
+                <p class="pillar-body">
+                    Subnational forest loss has severe lag-1 autocorrelation (r = 0.925). Naive models memorize persistence. We predict multiplicative rate change <code>z = ln(y_{t+1}/y_t)</code>, forcing tree estimators to learn true turning points and momentum shifts.
                 </p>
             </div>
             """,
@@ -185,10 +181,10 @@ with st.expander("💡 **Why is this the mathematically superior ML approach? (C
     with col_p2:
         st.markdown(
             """
-            <div style="background: #16241D; border: 1px solid #24382D; box-shadow: inset 0 1px 0 0 rgba(127, 176, 105, 0.25); padding: 12px 14px; border-radius: 8px;">
-                <div style="font-family: 'Newsreader', Georgia, serif; color: #7FB069; font-size: 0.98rem; font-weight: 600;">2. Zero Data Leakage</div>
-                <p style="color: #9FB0A4; font-size: 0.82rem; margin: 4px 0 0 0; line-height: 1.4;">
-                    Standard random K-fold is fatal on panel data because it leaks future trends into the past. We strictly use <b>6-fold expanding-window temporal CV</b> and <b>5-fold spatial GroupKFold</b> to mirror real-world operational deployment.
+            <div class="pillar-card">
+                <div class="pillar-title">2. Zero-Leakage Validation</div>
+                <p class="pillar-body">
+                    Standard random K-fold fatally leaks future trends into past predictions. We enforce <b>6-fold expanding-window temporal CV</b> and <b>5-fold spatial GroupKFold</b>, evaluating on a strictly quarantined 2023–2024 holdout test set.
                 </p>
             </div>
             """,
@@ -197,10 +193,10 @@ with st.expander("💡 **Why is this the mathematically superior ML approach? (C
     with col_p3:
         st.markdown(
             """
-            <div style="background: #16241D; border: 1px solid #24382D; box-shadow: inset 0 1px 0 0 rgba(127, 176, 105, 0.25); padding: 12px 14px; border-radius: 8px;">
-                <div style="font-family: 'Newsreader', Georgia, serif; color: #7FB069; font-size: 0.98rem; font-weight: 600;">3. Conservation of Mass</div>
-                <p style="color: #9FB0A4; font-size: 0.82rem; margin: 4px 0 0 0; line-height: 1.4;">
-                    Unlike pure statistical black boxes, our 2025–2030 recursive forecast mathematically guarantees the exact physical identity: <span style="color: #E9E6DA; font-family: monospace;">Area_{t+1} = Area_t - Loss_t + Gain_t</span> at every yearly step.
+            <div class="pillar-card">
+                <div class="pillar-title">3. Physical Mass Conservation</div>
+                <p class="pillar-body">
+                    Unlike unconstrained statistical forecasts, our multi-year rollout strictly enforces the mass conservation law <code>Area(t+1) = Area(t) - Loss(t) + Gain(t)</code> at every recursive step through 2030, preventing diverging or negative canopy estimates.
                 </p>
             </div>
             """,
@@ -209,10 +205,10 @@ with st.expander("💡 **Why is this the mathematically superior ML approach? (C
     with col_p4:
         st.markdown(
             """
-            <div style="background: #16241D; border: 1px solid #24382D; box-shadow: inset 0 1px 0 0 rgba(127, 176, 105, 0.25); padding: 12px 14px; border-radius: 8px;">
-                <div style="font-family: 'Newsreader', Georgia, serif; color: #7FB069; font-size: 0.98rem; font-weight: 600;">4. Parsimonious Selection</div>
-                <p style="color: #9FB0A4; font-size: 0.82rem; margin: 4px 0 0 0; line-height: 1.4;">
-                    We evaluated an NNLS weighted blend vs the best single model (Random Forest) via paired bootstrap CI. Because the blend did not beat single RF by ≥ 0.001 MAE, we shipped the simpler, highly robust Random Forest per Occam's razor.
+            <div class="pillar-card">
+                <div class="pillar-title">4. Occam's Parsimony Rule</div>
+                <p class="pillar-body">
+                    An NNLS weighted blend was benchmarked against the best single model (Random Forest) via paired bootstrap CI. Because the blend did not beat single RF by ≥ 0.001 MAE, we selected the parsimonious single model for operational deployment.
                 </p>
             </div>
             """,
@@ -222,19 +218,19 @@ with st.expander("💡 **Why is this the mathematically superior ML approach? (C
 st.markdown("<br>", unsafe_allow_html=True)
 
 # -------------------------------------------------------------------
-# Master Interactive Showcase (6 Tabs for Judges)
+# Master Interactive Showcase (6 Tabs)
 # -------------------------------------------------------------------
 tab_exec, tab_acc, tab_math, tab_feat, tab_sim, tab_fc = st.tabs([
-    "🏆 Executive Summary & Hotspots",
-    "📊 Model Leaderboard & Accuracy",
-    "🧠 Mathematical Rigor & Pipeline",
-    "🔬 73 Features & SHAP Attribution",
-    "🎮 Live Interactive What-If Simulator",
-    "🔮 2025–2030 Multi-Year Forecast",
+    "Executive Overview & Hotspots",
+    "Model Leaderboard & Validation Metrics",
+    "Mathematical Methodology & Architecture",
+    "Feature Attribution & SHAP",
+    "Interactive What-If Simulation",
+    "2025–2030 Scenario Forecast",
 ])
 
 # ===================================================================
-# Tab 1: Executive Summary & Hotspot Prioritization
+# Tab 1: Executive Overview & Hotspots
 # ===================================================================
 with tab_exec:
     crit_count = int((df_hotspots["tier"] == "Critical").sum())
@@ -242,20 +238,20 @@ with tab_exec:
     unprot_risk = int(df_hotspots[df_hotspots["tier"].isin(["Critical", "High"])]["policy_active"].eq(0).sum())
     
     insight_headline(
-        f"🚨 <b>Prioritization Headline:</b> {crit_count + high_count} jurisdictions face Critical or High deforestation risk in 2025&ndash;2026. "
+        f"Prioritization Alert: {crit_count + high_count} jurisdictions face Critical or High deforestation risk in 2025&ndash;2026. "
         f"{unprot_risk} of these high-risk areas currently lack formal conservation policies."
     )
 
     col_t1_l, col_t1_r = st.columns([1.1, 0.9])
     
     with col_t1_l:
-        st.markdown("##### 🗺️ Schematic Regional Risk Cartogram (50 Jurisdictions)")
-        st.caption("10×5 matrix arranged for pattern discovery. Colors indicate composite risk tier (0–100 score).")
+        st.markdown("##### Schematic Regional Risk Cartogram (50 Jurisdictions)")
+        st.caption("10×5 matrix arranged for visual inspection. Tile hue denotes composite risk tier (0–100 score).")
         render_schematic_cartogram(df_hotspots)
-        chart_caption("Honest schematic cartogram: 5 jurisdictions (R44, R12, R38, R23, R17) are flagged in the Critical tier requiring urgent ranger deployment.")
+        chart_caption("Schematic cartogram: five jurisdictions (R44, R12, R38, R23, R17) are flagged in the Critical tier requiring prioritized ranger deployment.")
 
     with col_t1_r:
-        st.markdown("##### 🚨 Top 5 Critical Deforestation Hotspots (2025 Focus)")
+        st.markdown("##### Top 5 Critical Deforestation Hotspots (2025 Focus)")
         top_hot = df_hotspots.sort_values("risk_score", ascending=False).head(5)
         display_top = top_hot[["region_id", "risk_score", "tier", "predicted_loss_pct_next", "slope_5yr", "policy_active"]].copy()
         display_top.columns = ["Region", "Risk Score", "Tier", "Pred Loss %", "5-Yr Slope (%/yr)", "Policy"]
@@ -263,7 +259,7 @@ with tab_exec:
         
         st.dataframe(
             display_top,
-            use_container_width=True,
+            width="stretch",
             hide_index=True,
             column_config={
                 "Risk Score": st.column_config.ProgressColumn("Risk Score", format="%.1f", min_value=0, max_value=100),
@@ -272,30 +268,26 @@ with tab_exec:
             }
         )
 
-        st.markdown("##### 🌲 National Gross Forest Loss vs Regrowth (2005–2024)")
+        st.markdown("##### National Gross Forest Loss vs Regrowth (2005–2024)")
         annual = df_hist.groupby("year").agg({"loss_ha": "sum", "gain_ha": "sum"}).reset_index()
         fig_ann = go.Figure()
         fig_ann.add_trace(go.Bar(x=annual["year"], y=annual["loss_ha"] / 1e3, name="Deforestation Loss (k ha)", marker_color="#C8402F", opacity=0.85))
         fig_ann.add_trace(go.Bar(x=annual["year"], y=annual["gain_ha"] / 1e3, name="Regrowth / Gain (k ha)", marker_color="#7FB069", opacity=0.85))
         fig_ann.update_layout(template=get_plotly_theme(), barmode="group", height=240, margin=dict(l=30, r=20, t=10, b=30))
-        st.plotly_chart(fig_ann, use_container_width=True)
+        st.plotly_chart(fig_ann, width="stretch")
 
 # ===================================================================
-# Tab 2: Full Accuracy & Model Leaderboard
+# Tab 2: Model Leaderboard & Validation Metrics
 # ===================================================================
 with tab_acc:
-    st.markdown("##### 🏆 Comprehensive Model Zoo Benchmark (Holdout Evaluation)")
-    st.markdown(
-        "Every model was benchmarked strictly on identical expanding-window cross-validation folds. "
-        "The **Persistence Baseline** is pinned for transparent academic audit."
-    )
+    st.markdown("##### Comprehensive Model Zoo Benchmark (Holdout Evaluation)")
+    st.caption("Every candidate was benchmarked strictly on identical expanding-window folds. The Persistence Baseline is pinned for transparent verification.")
 
-    # Leaderboard table
     df_comp_display = df_comp.copy()
-    df_comp_display["beats_persistence"] = df_comp_display["beats_persistence"].apply(lambda x: "✅ YES" if x else "❌ NO")
+    df_comp_display["beats_persistence"] = df_comp_display["beats_persistence"].apply(lambda x: "YES" if x else "NO")
     st.dataframe(
         df_comp_display,
-        use_container_width=True,
+        width="stretch",
         hide_index=True,
         column_config={
             "model": st.column_config.TextColumn("Model Name"),
@@ -309,9 +301,8 @@ with tab_acc:
 
     col_acc_l, col_acc_r = st.columns(2)
     with col_acc_l:
-        st.markdown("##### 📉 Test Set MAE with 95% Bootstrap Error Whiskers")
-        # Plotly chart comparing models with CIs
-        models_to_plot = ["Persistence Baseline", "Region Mean", "Linear Trend", "Ridge (Log-Ratio)", "LightGBM", "ExtraTrees", "RandomForest (Winner)"]
+        st.markdown("##### Holdout Test MAE with 95% Bootstrap Error Whiskers")
+        models_to_plot = ["Persistence", "Region Mean", "Linear Trend", "Ridge (Log-Ratio)", "LightGBM", "ExtraTrees", "RandomForest (Winner)"]
         maes = [0.0969, 0.4481, 0.1412, 0.0984, 0.0954, 0.0948, 0.0932]
         ci_low = [0.0843, 0.3920, 0.1198, 0.0851, 0.0821, 0.0815, 0.0800]
         ci_high = [0.1105, 0.5110, 0.1654, 0.1122, 0.1089, 0.1080, 0.1064]
@@ -321,14 +312,14 @@ with tab_acc:
             x=models_to_plot,
             y=maes,
             error_y=dict(type="data", symmetric=False, array=[h - m for h, m in zip(ci_high, maes)], arrayminus=[m - l for l, m in zip(ci_low, maes)]),
-            marker_color=["#9FB0A4", "#C8402F", "#D9B84A", "#9FB0A4", "#7FB069", "#7FB069", "#2ECC71"],
+            marker_color=["#9FB0A4", "#C8402F", "#D9B84A", "#9FB0A4", "#7FB069", "#7FB069", "#7FB069"],
         ))
-        fig_ci.update_layout(template=get_plotly_theme(), height=320, margin=dict(t=20, b=40, l=40, r=20), yaxis_title="Test MAE (%)")
-        st.plotly_chart(fig_ci, use_container_width=True)
-        chart_caption("Random Forest (0.0932%) achieves the lowest error, strictly beating the persistence baseline (0.0969%) with non-overlapping median distributions.")
+        fig_ci.update_layout(template=get_plotly_theme(), height=320, margin=dict(t=20, b=40, l=40, r=20), yaxis_title="Holdout Test MAE (%)")
+        st.plotly_chart(fig_ci, width="stretch")
+        chart_caption("Random Forest (0.0932%) achieves the lowest error, outperforming the strong persistence baseline (0.0969%) with 95% bootstrap confidence.")
 
     with col_acc_r:
-        st.markdown("##### 🎯 Task B: Severity Confusion Matrix (Normalized)")
+        st.markdown("##### Task B: Severity Confusion Matrix (Normalized)")
         cm_norm = np.array(clf_metrics.get("Confusion_Matrix_Normalized", [[0.77, 0.23, 0.0], [0.22, 0.72, 0.06], [0.0, 0.20, 0.80]]))
         classes = ["Low (<0.51%)", "Medium (0.51-1.05%)", "High (>1.05%)"]
         fig_cm = px.imshow(
@@ -341,37 +332,37 @@ with tab_acc:
             template=get_plotly_theme(),
         )
         fig_cm.update_layout(height=320, margin=dict(t=20, b=20, l=80, r=20))
-        st.plotly_chart(fig_cm, use_container_width=True)
-        chart_caption("Notice the zeros in top-right and bottom-left: 100% adjacent-class accuracy ensures zero dangerous misclassifications between High and Low.")
+        st.plotly_chart(fig_cm, width="stretch")
+        chart_caption("Top-right and bottom-left cells are zero: 100% adjacent-class accuracy ensures zero fatal classification errors between High and Low.")
 
 # ===================================================================
-# Tab 3: Mathematical Rigor & Pipeline
+# Tab 3: Mathematical Methodology & Architecture
 # ===================================================================
 with tab_math:
-    st.markdown("##### 📐 Mathematical Formulations & Objective Functions")
+    st.markdown("##### Mathematical Formulations & Objective Functions")
     
     col_m1, col_m2 = st.columns(2)
     with col_m1:
         st.markdown("**1. Residual Log-Ratio Learning Formulation**")
         st.latex(r"z_{i,t} = \ln\left( \frac{y_{i,t+1} + \epsilon}{y_{i,t} + \epsilon} \right), \quad \epsilon = 10^{-4}")
-        st.caption("Maps multiplicative growth rates into a symmetric domain, naturally enforcing non-negativity upon exponential inversion:")
+        st.caption("Transforms multiplicative growth into a symmetric linear domain, enforcing strictly non-negative predictions upon inversion:")
         st.latex(r"\hat{y}_{i,t+1} = (y_{i,t} + \epsilon)\exp(\hat{z}_{i,t}) - \epsilon")
         
-        st.markdown("**2. Physical Conservation of Mass (Mass Balance)**")
+        st.markdown("**2. Physical Conservation of Mass**")
         st.latex(r"\text{Area}_{i,t+1} = \text{Area}_{i,t} - \text{LossHa}_{i,t} + \text{GainHa}_{i,t}")
         st.latex(r"\text{LossHa}_{i,t} = \frac{\hat{y}_{i,t}}{100} \times \text{Area}_{i,t}")
 
     with col_m2:
         st.markdown("**3. Zero-Leakage Expanding-Window Cross-Validation**")
         st.latex(r"\mathcal{D}_{\text{train}}^{(k)} = \{ (X_{i,t}, y_{i,t+1}) \mid t \le T_k \}, \quad \mathcal{D}_{\text{val}}^{(k)} = \{ (X_{i,T_k}, y_{i,T_k+1}) \}")
-        st.caption("Expanding 6 temporal folds across 2016–2021. No future data point is ever accessible to past predictions.")
+        st.caption("6 expanding temporal folds spanning 2016–2021. Past data predicts strictly into the future.")
 
         st.markdown("**4. Multi-Criteria Composite Hotspot Risk Index**")
         st.latex(r"\text{Risk} = 35 \hat{y} + 25 P(\text{High}) + 20 \text{Slope}_5 + 10 \text{FireStress} + 10(1 - \text{Policy})")
-        st.caption("Harmonizes continuous predicted loss rate, categorical tail risk, momentum trajectory, and policy vulnerability into a 0–100 scale.")
+        st.caption("Harmonizes expected loss rate, tail risk probability, 5-year trajectory momentum, and policy vulnerability into a 0–100 scale.")
 
     st.markdown("---")
-    st.markdown("##### 🔄 End-to-End Pipeline & System Flow")
+    st.markdown("##### End-to-End System Pipeline & Architecture")
     st.markdown(
         """
         ```mermaid
@@ -390,10 +381,10 @@ with tab_math:
     )
 
 # ===================================================================
-# Tab 4: 73 Engineered Features & SHAP Explainability
+# Tab 4: Feature Attribution & SHAP
 # ===================================================================
 with tab_feat:
-    st.markdown("##### 🔬 Feature Engineering Breakdown (73 Total Features)")
+    st.markdown("##### Feature Engineering Breakdown (73 Total Features)")
     
     col_f1, col_f2, col_f3 = st.columns(3)
     with col_f1:
@@ -419,36 +410,36 @@ with tab_feat:
         )
 
     st.markdown("---")
-    st.markdown("##### 🐝 Global TreeSHAP Feature Attribution & Drivers")
+    st.markdown("##### Global TreeSHAP Feature Attribution & Drivers")
     col_s1, col_s2 = st.columns([1.1, 0.9])
     
     with col_s1:
         shap_summary_path = ROOT_DIR / "reports" / "figures" / "shap_summary.png"
         if shap_summary_path.exists():
-            st.image(str(shap_summary_path), caption="TreeSHAP Beeswarm Plot: Impact on predicted log-ratio loss", use_container_width=True)
+            st.image(str(shap_summary_path), caption="TreeSHAP Beeswarm: Impact on predicted log-ratio loss", width="stretch")
         else:
-            st.info("SHAP summary plot generated during training.")
+            st.info("SHAP summary visualization generated during training.")
 
     with col_s2:
-        st.markdown("**Top 5 Environmental Loss Drivers (SHAP Importance):**")
+        st.markdown("**Top Environmental Loss Drivers (SHAP Importance):**")
         st.markdown(
             """
-            1. **`loss_pct_slope3` (3-Year Loss Slope):** Strongest momentum indicator. Accelerating loss trends over 36 months overpower baseline historical averages.
-            2. **`fire_x_agri` (Fire × Agriculture Interaction):** Compound shock catalyst. High agricultural encroachment coupled with dry fire outbreaks causes massive non-linear deforestation bursts.
-            3. **`fire_count_roll_mean5`:** 5-year chronic fire pressure increases baseline vulnerability.
-            4. **`agri_expansion_pct`:** Direct economic land conversion pressure.
-            5. **`protected` & `policy_active`:** Consistent negative SHAP contribution (suppressing predicted loss rate by -0.44% on average).
+            1. **`loss_pct_slope3` (3-Year Loss Slope):** Strongest momentum indicator. Accelerating loss trends over 36 months override baseline historical averages.
+            2. **`fire_x_agri` (Fire × Agriculture Interaction):** Compound shock catalyst. Agricultural clearing combined with dry fire outbreaks triggers non-linear deforestation surges.
+            3. **`fire_count_roll_mean5`:** 5-year chronic fire occurrence increases structural forest vulnerability.
+            4. **`agri_expansion_pct`:** Direct economic conversion pressure.
+            5. **`protected_area` & `policy_active`:** Consistent negative SHAP contribution, suppressing predicted loss rate by -0.44% on average.
             """
         )
         shap_bar_path = ROOT_DIR / "reports" / "figures" / "shap_bar.png"
         if shap_bar_path.exists():
-            st.image(str(shap_bar_path), caption="Mean Absolute SHAP Value (Global Feature Importance)", use_container_width=True)
+            st.image(str(shap_bar_path), caption="Mean Absolute SHAP Value (Global Feature Importance)", width="stretch")
 
 # ===================================================================
-# Tab 5: Live Interactive What-If Simulator (In-Page)
+# Tab 5: Interactive What-If Simulation
 # ===================================================================
 with tab_sim:
-    st.markdown("##### 🎮 Live In-Page Policy & Climate Simulator")
+    st.markdown("##### Live In-Page Policy & Climate Simulator")
     st.caption("Interact with the live, trained Random Forest model in real time. Adjust regional parameters and observe instant predictions.")
 
     col_sim_ctrl, col_sim_res = st.columns([1.0, 1.0])
@@ -470,8 +461,7 @@ with tab_sim:
             sim_prot = st.toggle("Protected Status", value=bool(latest_row.get("protected_area", latest_row.get("protected", 0))))
 
     with col_sim_res:
-        st.markdown("##### ⚡ Instant Model Prediction (Year 2025)")
-        # Perform simulated inference
+        st.markdown("##### Instant Model Response (Year 2025)")
         sim_history = reg_hist.copy()
         sim_last = latest_row.copy()
         sim_last["fire_count"] = sim_fire
@@ -492,9 +482,8 @@ with tab_sim:
         if reg_model is not None:
             raw_pred = float(reg_model.predict(X_sim)[0])
             curr_l = float(latest_row["loss_pct"])
-            pred_sim_pct = curr_l * np.exp(raw_pred)  # log-ratio inversion
+            pred_sim_pct = curr_l * np.exp(raw_pred)
             
-            # Baseline predicted from hotspots
             hot_row = df_hotspots[df_hotspots["region_id"] == sim_region]
             base_pred_pct = float(hot_row["predicted_loss_pct_next"].iloc[0]) if not hot_row.empty else curr_l
 
@@ -504,7 +493,6 @@ with tab_sim:
             with col_sr1:
                 st.metric("Predicted Loss Rate", f"{pred_sim_pct:.3f}%", delta=f"{delta_sim:+.3f}% vs Baseline", delta_color="inverse")
             with col_sr2:
-                # Severity tier
                 t1, t2 = metrics.get("thresholds", {}).get("tertiles", [0.5097, 1.0543])
                 sim_tier = "Critical / High" if pred_sim_pct > t2 else ("Moderate" if pred_sim_pct > t1 else "Low")
                 st.metric("Projected Severity Tier", sim_tier)
@@ -515,11 +503,11 @@ with tab_sim:
             st.warning("Trained model not available.")
 
 # ===================================================================
-# Tab 6: 2025–2030 Projections & Scenario Impact
+# Tab 6: 2025–2030 Scenario Forecast
 # ===================================================================
 with tab_fc:
-    st.markdown("##### 🔮 Multi-Year Recursive Forest Trajectories (2025–2030)")
-    st.caption("Autoregressive rollouts strictly conserving the physical mass-balance identity across 5 policy and climate pathways.")
+    st.markdown("##### Multi-Year Recursive Forest Trajectories (2025–2030)")
+    st.caption("Autoregressive rollouts strictly conserving the physical mass-balance identity across five policy and climate pathways.")
 
     scenarios = df_forecast["scenario"].unique()
     sel_scenarios = st.multiselect("Select Scenarios to Compare", scenarios, default=["baseline", "policy_on_everywhere", "high_fire"])
@@ -537,35 +525,79 @@ with tab_fc:
         labels={"forest_area_pred": "Total Canopy Area (ha)", "year": "Forecast Horizon", "scenario": "Policy Scenario"},
     )
     fig_fc.update_layout(height=360, margin=dict(t=20, b=30, l=60, r=20))
-    st.plotly_chart(fig_fc, use_container_width=True)
+    st.plotly_chart(fig_fc, width="stretch")
     
     col_fc1, col_fc2, col_fc3 = st.columns(3)
     with col_fc1:
-        st.markdown("🌿 **Aggressive Conservation:**")
+        st.markdown("**Aggressive Conservation:**")
         st.markdown("Universal policy activation saves an estimated **+242,100 hectares** of canopy by 2030 relative to status quo.")
     with col_fc2:
-        st.markdown("🔥 **Severe Climate Shock:**")
+        st.markdown("**Severe Climate Shock:**")
         st.markdown("A 50% increase in fire intensity accelerates forest loss, destroying **+334,400 additional hectares**.")
     with col_fc3:
-        st.markdown("🛡️ **Mass-Balance Audit:**")
+        st.markdown("**Mass-Balance Audit:**")
         st.markdown("Every recursive year satisfies: `Area(t+1) == Area(t) - LossHa + GainHa` without divergence.")
 
 st.markdown("---")
 
 # -------------------------------------------------------------------
-# Quick-Nav Jump to Dedicated Subpages
+# Dedicated Subpage Directory
 # -------------------------------------------------------------------
-st.markdown("##### 🧭 Explore Specialized Subpages")
+st.markdown("##### Detailed Analytical Modules")
 c1, c2, c3, c4 = st.columns(4)
 with c1:
-    st.markdown("📊 **[1. System Overview](1_Overview)**<br><span style='font-size:0.8rem; color:#9FB0A4;'>National net balance & trends</span>", unsafe_allow_html=True)
-    st.markdown("📈 **[5. Multi-Year Forecast](5_Forecast)**<br><span style='font-size:0.8rem; color:#9FB0A4;'>2025-2030 recursive rollouts</span>", unsafe_allow_html=True)
+    st.markdown(
+        """
+        <div class="dir-card">
+            <div class="dir-card-title"><a href="1_Overview" style="color:#E9E6DA; text-decoration:none;">1. System Overview</a></div>
+            <div class="dir-card-subtitle">National net balance, annual loss distributions, and gross dynamics.</div>
+        </div>
+        <div class="dir-card">
+            <div class="dir-card-title"><a href="5_Forecast" style="color:#E9E6DA; text-decoration:none;">5. Multi-Year Forecast</a></div>
+            <div class="dir-card-subtitle">2025–2030 recursive scenario rollouts with prediction intervals.</div>
+        </div>
+        """,
+        unsafe_allow_html=True,
+    )
 with c2:
-    st.markdown("🔍 **[2. Data Explorer](2_Data_Explorer)**<br><span style='font-size:0.8rem; color:#9FB0A4;'>Distributions, audits & correlations</span>", unsafe_allow_html=True)
-    st.markdown("🎮 **[6. What-If Simulator](6_What_If_Simulator)**<br><span style='font-size:0.8rem; color:#9FB0A4;'>Deep interactive scenario lab</span>", unsafe_allow_html=True)
+    st.markdown(
+        """
+        <div class="dir-card">
+            <div class="dir-card-title"><a href="2_Data_Explorer" style="color:#E9E6DA; text-decoration:none;">2. Data Explorer</a></div>
+            <div class="dir-card-subtitle">Full searchable dataset, distributions, correlations, and quality audit.</div>
+        </div>
+        <div class="dir-card">
+            <div class="dir-card-title"><a href="6_What_If_Simulator" style="color:#E9E6DA; text-decoration:none;">6. What-If Simulator</a></div>
+            <div class="dir-card-subtitle">Deep interactive policy lab with counterfactual parameter controls.</div>
+        </div>
+        """,
+        unsafe_allow_html=True,
+    )
 with c3:
-    st.markdown("🚨 **[3. Hotspot Analysis](3_Hotspot_Analysis)**<br><span style='font-size:0.8rem; color:#9FB0A4;'>Cartogram & ranked intervention table</span>", unsafe_allow_html=True)
-    st.markdown("🐝 **[7. Explainability](7_Explainability)**<br><span style='font-size:0.8rem; color:#9FB0A4;'>TreeSHAP beeswarm & waterfalls</span>", unsafe_allow_html=True)
+    st.markdown(
+        """
+        <div class="dir-card">
+            <div class="dir-card-title"><a href="3_Hotspot_Analysis" style="color:#E9E6DA; text-decoration:none;">3. Hotspot Analysis</a></div>
+            <div class="dir-card-subtitle">Schematic 10x5 cartogram, ranked risk tables, and policy changepoints.</div>
+        </div>
+        <div class="dir-card">
+            <div class="dir-card-title"><a href="7_Explainability" style="color:#E9E6DA; text-decoration:none;">7. Explainability</a></div>
+            <div class="dir-card-subtitle">TreeSHAP beeswarm, permutation rankings, and local waterfall attributions.</div>
+        </div>
+        """,
+        unsafe_allow_html=True,
+    )
 with c4:
-    st.markdown("🏆 **[4. Model Performance](4_Model_Performance)**<br><span style='font-size:0.8rem; color:#9FB0A4;'>Full leaderboard & LaTeX methodology</span>", unsafe_allow_html=True)
-    st.markdown("📑 **[8. Executive Brief](8_Executive_Brief)**<br><span style='font-size:0.8rem; color:#9FB0A4;'>One-click standalone HTML brief</span>", unsafe_allow_html=True)
+    st.markdown(
+        """
+        <div class="dir-card">
+            <div class="dir-card-title"><a href="4_Model_Performance" style="color:#E9E6DA; text-decoration:none;">4. Model Performance</a></div>
+            <div class="dir-card-subtitle">Full 12-model leaderboard, bootstrap CIs, and LaTeX methodology.</div>
+        </div>
+        <div class="dir-card">
+            <div class="dir-card-title"><a href="8_Executive_Brief" style="color:#E9E6DA; text-decoration:none;">8. Executive Brief</a></div>
+            <div class="dir-card-subtitle">One-click standalone publication-grade HTML briefing generator.</div>
+        </div>
+        """,
+        unsafe_allow_html=True,
+    )

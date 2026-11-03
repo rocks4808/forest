@@ -264,3 +264,101 @@ section[data-testid="stSidebar"] .stSlider label {
     font-size: 0.85rem;
 }
 
+/* Editorial Masthead */
+.masthead-container {
+    background: #121E18;
+    border: 1px solid #24382D;
+    border-radius: 12px;
+    padding: 24px 28px;
+    margin-bottom: 24px;
+}
+.masthead-meta-row {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+    margin-bottom: 12px;
+    flex-wrap: wrap;
+}
+.masthead-pill {
+    background: #16241D;
+    color: #9FB0A4;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.72rem;
+    padding: 3px 10px;
+    border-radius: 4px;
+    border: 1px solid #24382D;
+    letter-spacing: 0.02em;
+}
+.masthead-pill-accent {
+    background: #16241D;
+    color: #7FB069;
+    border-color: #7FB069;
+}
+.masthead-title {
+    font-family: 'Newsreader', Georgia, serif;
+    font-size: 2.2rem;
+    color: #E9E6DA;
+    margin: 0 0 8px 0;
+    font-weight: 500;
+    letter-spacing: -0.02em;
+    line-height: 1.2;
+}
+.masthead-description {
+    color: #9FB0A4;
+    font-size: 0.95rem;
+    margin: 0;
+    max-width: 980px;
+    line-height: 1.55;
+}
+
+/* Architectural Pillar Cards */
+.pillar-card {
+    background: #121E18;
+    border: 1px solid #24382D;
+    border-radius: 8px;
+    padding: 16px 18px;
+    height: 100%;
+}
+.pillar-card:hover {
+    border-color: #3B5445;
+}
+.pillar-title {
+    font-family: 'Newsreader', Georgia, serif;
+    color: #7FB069;
+    font-size: 1.05rem;
+    font-weight: 600;
+    margin-bottom: 6px;
+}
+.pillar-body {
+    color: #9FB0A4;
+    font-size: 0.83rem;
+    line-height: 1.45;
+    margin: 0;
+}
+
+/* Subpage Directory Cards */
+.dir-card {
+    background: #121E18;
+    border: 1px solid #24382D;
+    border-radius: 8px;
+    padding: 14px 16px;
+    margin-bottom: 12px;
+    transition: all 0.15s ease;
+}
+.dir-card:hover {
+    border-color: #7FB069;
+    background: #16241D;
+}
+.dir-card-title {
+    font-family: 'Newsreader', Georgia, serif;
+    font-size: 1.05rem;
+    font-weight: 600;
+    color: #E9E6DA;
+    margin-bottom: 4px;
+}
+.dir-card-subtitle {
+    font-size: 0.8rem;
+    color: #9FB0A4;
+    line-height: 1.35;
+}
+
