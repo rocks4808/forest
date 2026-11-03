@@ -5,6 +5,7 @@ colors:
   bg-base: "#0B1410"
   surface-raised: "#121E18"
   surface-card: "#16241D"
+  surface-hover: "#3B5445"
   border-hairline: "#24382D"
   border-subtle: "#1F3127"
   text-primary: "#E9E6DA"
@@ -23,12 +24,29 @@ typography:
     fontWeight: 500
     lineHeight: 1.15
     letterSpacing: "-0.02em"
+  display-md:
+    fontFamily: "Newsreader, Georgia, serif"
+    fontSize: "2.2rem"
+    fontWeight: 500
+    lineHeight: 1.2
+  display-sm:
+    fontFamily: "Newsreader, Georgia, serif"
+    fontSize: "1.85rem"
+    fontWeight: 500
   headline:
     fontFamily: "Newsreader, Georgia, serif"
     fontSize: "1.45rem"
     fontWeight: 500
     lineHeight: 1.3
     letterSpacing: "-0.015em"
+  title-md:
+    fontFamily: "Newsreader, Georgia, serif"
+    fontSize: "1.25rem"
+    fontWeight: 600
+  title-sm:
+    fontFamily: "IBM Plex Sans, sans-serif"
+    fontSize: "1.05rem"
+    fontWeight: 600
   body:
     fontFamily: "IBM Plex Sans, -apple-system, BlinkMacSystemFont, sans-serif"
     fontSize: "0.92rem"
@@ -39,15 +57,21 @@ typography:
     fontSize: "0.78rem"
     fontWeight: 600
     letterSpacing: "0.04em"
+  micro:
+    fontFamily: "IBM Plex Sans, sans-serif"
+    fontSize: "0.72rem"
+    fontWeight: 500
   mono:
     fontFamily: "IBM Plex Mono, monospace"
     fontSize: "0.85rem"
     fontWeight: 500
 rounded:
+  xs: "3px"
   sm: "4px"
-  md: "8px"
-  lg: "10px"
-  xl: "12px"
+  md: "6px"
+  lg: "8px"
+  xl: "10px"
+  2xl: "12px"
   full: "9999px"
 spacing:
   xs: "4px"
