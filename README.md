@@ -155,6 +155,20 @@ python scripts/demo_walkthrough.py
 
 ---
 
+## 📈 Visual Assets & Explainability Proof
+
+### 1. Global TreeSHAP Summary (Beeswarm Attribution)
+![TreeSHAP Feature Impact](reports/figures/shap_summary.png)
+*Figure 1: TreeSHAP beeswarm plot illustrating feature impact on predicted residual log-ratio loss. Accelerating 3-year loss slope (`loss_pct_slope3`) and compound fire-agriculture pressure (`fire_x_agri`) drive severe deforestation, while active conservation policy (`policy_active`) reliably suppresses predicted loss.*
+
+### 2. National Loss vs Regrowth Dynamics & Temporal Autocorrelation
+| National Loss vs Regrowth (2005–2024) | Lag-1 Autocorrelation (r = 0.925) |
+| :---: | :---: |
+| ![National Dynamics](reports/figures/eda_trends_national.png) | ![Autocorrelation](reports/figures/eda_autocorrelation.png) |
+| *Gross loss consistently outpaces regrowth* | *High inertia motivates residual log-ratio modeling* |
+
+---
+
 ## ⚖️ License & Integrity
 Seed 42 is enforced across all splits, models, and simulations. Zero data leakage is mathematically enforced and tested.
 
