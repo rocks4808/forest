@@ -1,0 +1,90 @@
+{
+  "metadata": {
+    "seed": 42,
+    "best_regression_model": "RandomForest",
+    "target_form": "log_ratio",
+    "classification_type": "direct",
+    "total_features": 73,
+    "timestamp": "2026-11-03T11:41:30.274442",
+    "execution_time_sec": 249.43
+  },
+  "regression": {
+    "holdout_val_2022": {
+      "persistence_mae": 0.1251,
+      "model_mae": 0.11153702811395545
+    },
+    "test_2023_2024": {
+      "persistence_mae": 0.09692,
+      "persistence_ci": [
+        0.08433925,
+        0.11045025
+      ],
+      "model_mae": 0.09321885207139895,
+      "model_ci": [
+        0.08004085134408974,
+        0.10641744136654181
+      ],
+      "R2": 0.9491079074498836,
+      "RMSE": 0.11763783206876557,
+      "sMAPE": 12.276195996746285,
+      "MASE": 0.9618123408109672
+    }
+  },
+  "classification": {
+    "holdout_val_2022": {
+      "Accuracy": 0.76,
+      "Macro_Precision": 0.7828042328042328,
+      "Macro_Recall": 0.7649831649831649,
+      "Macro_F1": 0.7723378212974296,
+      "Weighted_F1": 0.7626438188494491,
+      "MCC": 0.623349927712565,
+      "Cohen_Kappa": 0.786628733997155,
+      "Adjacent_Accuracy": 1.0,
+      "ROC_AUC": NaN,
+      "Confusion_Matrix": [
+        [
+          17,
+          5,
+          0
+        ],
+        [
+          4,
+          13,
+          1
+        ],
+        [
+          0,
+          2,
+          8
+        ]
+      ],
+      "Confusion_Matrix_Normalized": [
+        [
+          0.7727272727272727,
+          0.22727272727272727,
+          0.0
+        ],
+        [
+          0.2222222222222222,
+          0.7222222222222222,
+          0.05555555555555555
+        ],
+        [
+          0.0,
+          0.2,
+          0.8
+        ]
+      ],
+      "Labels": [
+        0,
+        1,
+        2
+      ]
+    }
+  },
+  "thresholds": {
+    "low_upper": 0.97101,
+    "high_lower": 1.4579900000000001,
+    "mode": "ternary"
+  }
+}

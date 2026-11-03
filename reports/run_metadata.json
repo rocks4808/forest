@@ -1,0 +1,145 @@
+{
+  "python_version": "3.14.7 (tags/v3.14.7:823f032, Aug  5 2026, 10:51:32) [MSC v.1944 64 bit (AMD64)]",
+  "seed": 42,
+  "features": [
+    "agri_expansion_pct",
+    "agri_expansion_pct_lag1",
+    "agri_expansion_pct_lag2",
+    "agri_expansion_pct_lag3",
+    "agri_expansion_pct_roll_mean3",
+    "agri_expansion_pct_roll_mean5",
+    "agri_expansion_pct_roll_std3",
+    "agri_expansion_pct_roll_std5",
+    "cum_loss_ha",
+    "cum_loss_share",
+    "drought_flag",
+    "fire_count",
+    "fire_count_lag1",
+    "fire_count_lag2",
+    "fire_count_lag3",
+    "fire_count_pct_change",
+    "fire_count_roll_mean3",
+    "fire_count_roll_mean5",
+    "fire_count_roll_std3",
+    "fire_count_roll_std5",
+    "fire_per_100k_ha",
+    "fire_x_agri",
+    "forest_area_change_rate",
+    "forest_area_ha",
+    "forest_area_rank",
+    "gain_ha",
+    "gain_ha_lag1",
+    "gain_ha_lag2",
+    "gain_ha_lag3",
+    "gain_to_loss_ratio",
+    "loss_ha",
+    "loss_ha_lag1",
+    "loss_ha_lag2",
+    "loss_ha_lag3",
+    "loss_pct",
+    "loss_pct_diff1",
+    "loss_pct_diff2",
+    "loss_pct_lag1",
+    "loss_pct_lag2",
+    "loss_pct_lag3",
+    "loss_pct_roll_mean3",
+    "loss_pct_roll_mean5",
+    "loss_pct_roll_std3",
+    "loss_pct_roll_std5",
+    "loss_pct_slope3",
+    "loss_pct_slope5",
+    "net_loss_ha",
+    "net_loss_pct",
+    "policy_active",
+    "policy_ever_active",
+    "policy_just_started",
+    "pop_density_growth",
+    "population_density",
+    "pressure_index",
+    "protected_area",
+    "protected_x_policy",
+    "rainfall_anomaly",
+    "rainfall_mm",
+    "rainfall_mm_lag1",
+    "rainfall_mm_lag2",
+    "rainfall_mm_lag3",
+    "rainfall_mm_roll_mean3",
+    "rainfall_mm_roll_mean5",
+    "rainfall_mm_roll_std3",
+    "rainfall_mm_roll_std5",
+    "region_mean_fire",
+    "region_mean_loss_pct",
+    "region_std_loss_pct",
+    "road_density_km_per_km2",
+    "road_x_pop",
+    "size_bucket",
+    "year_idx",
+    "years_since_policy"
+  ],
+  "thresholds": {
+    "low_upper": 0.97101,
+    "high_lower": 1.4579900000000001,
+    "mode": "ternary"
+  },
+  "best_params": {
+    "Ridge": {
+      "params": {
+        "alpha": 29.154431891537552
+      },
+      "score": 0.22350000557571417
+    },
+    "RandomForest": {
+      "params": {
+        "max_features": "sqrt",
+        "n_estimators": 487,
+        "max_depth": 17,
+        "min_samples_leaf": 6
+      },
+      "score": 0.17676615679489552
+    },
+    "ExtraTrees": {
+      "params": {
+        "max_features": 0.8,
+        "n_estimators": 404,
+        "max_depth": 6,
+        "min_samples_leaf": 11
+      },
+      "score": 0.18165009014911546
+    },
+    "GradientBoosting": {
+      "params": {
+        "n_estimators": 89,
+        "max_depth": 3,
+        "learning_rate": 0.012184186502221764,
+        "subsample": 0.9464704583099741
+      },
+      "score": 0.18469101662656995
+    },
+    "XGBoost": {
+      "params": {
+        "n_estimators": 89,
+        "max_depth": 4,
+        "learning_rate": 0.011662890273931383,
+        "subsample": 0.7301321323053057,
+        "colsample_bytree": 0.6943386448447411,
+        "reg_lambda": 0.06516990611177176,
+        "reg_alpha": 4.143687545759647,
+        "min_child_weight": 4
+      },
+      "score": 0.17938432773285853
+    },
+    "LightGBM": {
+      "params": {
+        "n_estimators": 89,
+        "num_leaves": 24,
+        "max_depth": 3,
+        "learning_rate": 0.03023795012558475,
+        "feature_fraction": 0.6943386448447411,
+        "min_data_in_leaf": 17,
+        "lambda_l1": 4.143687545759647,
+        "lambda_l2": 0.11756010900231852
+      },
+      "score": 0.17907077132038593
+    }
+  }
+}

@@ -1,0 +1,266 @@
+@import url('https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,300..700;1,6..72,300..700&family=IBM+Plex+Mono:wght@400;500;600;700&family=IBM+Plex+Sans:wght@300;400;500;600;700&display=swap');
+
+/* Global Reset & Typography */
+html, body, [class*="css"] {
+    font-family: 'IBM Plex Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+    color: #E9E6DA;
+    background-color: #0B1410;
+}
+
+/* Browser Surfaces (craft-floor: selection, scrollbars, focus) */
+::selection {
+    background-color: #24382D;
+    color: #7FB069;
+}
+::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+}
+::-webkit-scrollbar-track {
+    background: #0B1410;
+}
+::-webkit-scrollbar-thumb {
+    background: #24382D;
+    border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+    background: #3B5445;
+}
+:focus-visible {
+    outline: 1px solid #7FB069 !important;
+    outline-offset: 2px !important;
+}
+
+/* Streamlit Tab Overrides */
+div[data-testid="stTabs"] button[role="tab"] {
+    font-family: 'IBM Plex Sans', sans-serif;
+    font-size: 0.88rem;
+    font-weight: 500;
+    color: #9FB0A4 !important;
+    padding: 0.5rem 1rem;
+    border: none !important;
+    background: transparent !important;
+}
+div[data-testid="stTabs"] button[role="tab"][aria-selected="true"] {
+    color: #E9E6DA !important;
+    font-weight: 600;
+    border-bottom: 2px solid #7FB069 !important;
+}
+div[data-testid="stTabs"] div[role="tablist"] {
+    border-bottom: 1px solid #24382D;
+    gap: 1rem;
+}
+
+/* Hide Streamlit default chrome */
+#MainMenu, footer, header {
+    visibility: hidden;
+}
+.stDeployButton {
+    display: none;
+}
+div[data-testid="stToolbar"] {
+    display: none;
+}
+div.block-container {
+    padding-top: 1.5rem;
+    padding-bottom: 2rem;
+    max-width: 1400px;
+}
+
+/* Headings */
+h1, h2, h3 {
+    font-family: 'Newsreader', Georgia, serif;
+    font-weight: 500;
+    color: #E9E6DA;
+    letter-spacing: -0.02em;
+}
+h4, h5, h6 {
+    font-family: 'IBM Plex Sans', sans-serif;
+    font-weight: 600;
+    color: #9FB0A4;
+}
+
+/* Tabular Numerals and Mono Data */
+.mono, .stMetric [data-testid="stMetricValue"] {
+    font-family: 'IBM Plex Mono', monospace !important;
+    font-variant-numeric: tabular-nums;
+}
+
+/* Custom Top Bar */
+.top-nav-bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.75rem 1.25rem;
+    background-color: #121E18;
+    border: 1px solid #24382D;
+    border-radius: 10px;
+    margin-bottom: 1.5rem;
+}
+.brand-title {
+    font-family: 'Newsreader', Georgia, serif;
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: #E9E6DA;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+.status-pill {
+    background-color: #16241D;
+    color: #7FB069;
+    border: 1px solid #24382D;
+    border-radius: 9999px;
+    padding: 0.25rem 0.75rem;
+    font-size: 0.75rem;
+    font-family: 'IBM Plex Mono', monospace;
+}
+
+/* Insight Headline */
+.insight-headline {
+    font-family: 'Newsreader', Georgia, serif;
+    font-size: 1.45rem;
+    line-height: 1.35;
+    color: #E9E6DA;
+    background-color: #16241D;
+    border: 1px solid #24382D;
+    border-radius: 10px;
+    box-shadow: inset 0 1px 0 0 rgba(127, 176, 105, 0.2);
+    padding: 1.1rem 1.4rem;
+    margin: 1rem 0 1.5rem 0;
+}
+
+/* KPI Card */
+.kpi-container {
+    background-color: #16241D;
+    border: 1px solid #24382D;
+    border-radius: 10px;
+    padding: 1.1rem 1.25rem;
+    transition: transform 0.15s ease, border-color 0.15s ease;
+}
+.kpi-container:hover {
+    border-color: #7FB069;
+}
+.kpi-label {
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: #9FB0A4;
+    margin-bottom: 0.4rem;
+}
+.kpi-value {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 1.85rem;
+    font-weight: 600;
+    color: #E9E6DA;
+}
+.kpi-delta {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.8rem;
+    margin-top: 0.35rem;
+}
+.delta-good {
+    color: #7FB069;
+}
+.delta-warn {
+    color: #E07A3F;
+}
+.delta-bad {
+    color: #C8402F;
+}
+
+/* Risk Tiers Badges */
+.badge-critical {
+    background-color: rgba(200, 64, 47, 0.2);
+    color: #C8402F;
+    border: 1px solid #C8402F;
+    border-radius: 4px;
+    padding: 2px 8px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    font-family: 'IBM Plex Mono', monospace;
+}
+.badge-high {
+    background-color: rgba(224, 122, 63, 0.2);
+    color: #E07A3F;
+    border: 1px solid #E07A3F;
+    border-radius: 4px;
+    padding: 2px 8px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    font-family: 'IBM Plex Mono', monospace;
+}
+.badge-moderate {
+    background-color: rgba(217, 184, 74, 0.2);
+    color: #D9B84A;
+    border: 1px solid #D9B84A;
+    border-radius: 4px;
+    padding: 2px 8px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    font-family: 'IBM Plex Mono', monospace;
+}
+.badge-low {
+    background-color: rgba(127, 176, 105, 0.2);
+    color: #7FB069;
+    border: 1px solid #7FB069;
+    border-radius: 4px;
+    padding: 2px 8px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    font-family: 'IBM Plex Mono', monospace;
+}
+
+/* Schematic Cartogram Tiles */
+.tile-grid {
+    display: grid;
+    grid-template-columns: repeat(10, 1fr);
+    gap: 6px;
+    margin: 1.25rem 0;
+}
+.tile-cell {
+    background-color: #121E18;
+    border: 1px solid #24382D;
+    border-radius: 6px;
+    padding: 8px 4px;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.15s ease;
+}
+.tile-cell:hover {
+    transform: scale(1.05);
+    border-color: #E9E6DA;
+}
+.tile-id {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.85rem;
+    font-weight: 700;
+}
+.tile-score {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.75rem;
+    margin-top: 2px;
+}
+
+/* Chart caption */
+.chart-caption {
+    font-size: 0.82rem;
+    color: #6B7F73;
+    font-style: italic;
+    margin-top: 0.4rem;
+    margin-bottom: 1rem;
+    border-left: 1px solid #24382D;
+    padding-left: 0.5rem;
+}
+
+/* Sidebar styling */
+section[data-testid="stSidebar"] {
+    background-color: #0B1410 !important;
+    border-right: 1px solid #24382D;
+}
+section[data-testid="stSidebar"] .stSelectbox label, 
+section[data-testid="stSidebar"] .stSlider label {
+    color: #9FB0A4 !important;
+    font-size: 0.85rem;
+}
+

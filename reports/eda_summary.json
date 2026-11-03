@@ -1,0 +1,30 @@
+{
+  "n_regions": 50,
+  "n_years": 20,
+  "year_min": 2005,
+  "year_max": 2024,
+  "total_records": 1000,
+  "missing_values": 0,
+  "duplicate_rows": 0,
+  "identity_max_error": 0.001243398176863142,
+  "lag1_autocorrelation_mean": 0.4532957260714583,
+  "protected_area_static": true,
+  "road_density_static": true,
+  "regions_with_policy_change": 39,
+  "loss_pct_mean": 1.2156779999999998,
+  "loss_pct_std": 0.5769822604247421,
+  "loss_pct_min": 0.05,
+  "loss_pct_max": 2.864,
+  "loss_pct_by_protected": {
+    "unprotected": 1.3343987804878048,
+    "protected": 0.6748388888888889
+  },
+  "loss_pct_by_policy": {
+    "inactive": 1.3804354066985647,
+    "active": 0.9387265415549597
+  },
+  "total_initial_forest_area_ha": 21911768,
+  "total_latest_forest_area_ha": 17923473,
+  "total_cumulative_loss_ha": 4841046,
+  "total_cumulative_gain_ha": 695179
+}

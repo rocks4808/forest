@@ -1,0 +1,54 @@
+# Forest Loss Prediction Configuration
+seed: 42
+
+target:
+  regression: loss_pct    # loss_pct | loss_ha
+  horizon_years: 1        # 1, 2, or 3
+  custom_column: null
+
+classification:
+  mode: ternary           # ternary | binary
+  thresholds: auto        # auto = train quantiles, or give [0.96, 1.40]
+  binary_threshold: 1.5
+
+splits:
+  test_years: [2023, 2024]     # target years for final test
+  val_years: [2022]            # target years for validation
+  cv_expanding_min_train_years: 8  # minimum training years in expanding window
+  cv_n_spatial_folds: 5
+
+features:
+  lag_vars: [loss_pct, loss_ha, fire_count, agri_expansion_pct, rainfall_mm, gain_ha]
+  lag_orders: [1, 2, 3]
+  rolling_vars: [loss_pct, fire_count, agri_expansion_pct, rainfall_mm]
+  rolling_windows: [3, 5]
+
+tuning:
+  n_trials: 80
+  n_trials_fast: 10
+  timeout_per_model: 600  # seconds
+  seed_averaging_n: 5
+
+ensemble:
+  meta_learner: ridge
+  accept_threshold: 0.001  # minimum MAE improvement to accept ensemble
+
+hotspot:
+  weights:
+    predicted_loss_pct: 0.35
+    trend_slope: 0.20
+    prob_high: 0.20
+    fire_pressure: 0.10
+    human_pressure: 0.10
+    no_protection: 0.05
+
+forecast:
+  horizon: 6             # years 2025-2030
+  n_monte_carlo: 200
+  scenarios:
+    - baseline
+    - policy_on_everywhere
+    - agri_surge
+    - high_fire
+    - conservation_push
+
