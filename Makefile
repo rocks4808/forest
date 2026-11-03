@@ -1,4 +1,4 @@
-.PHONY: help install train fast app test lint clean
+.PHONY: help install train fast app test demo lint clean
 
 help:
 	@echo "CanopyIntel: Forest Loss Prediction & Deforestation Hotspot System"
@@ -8,6 +8,7 @@ help:
 	@echo "make fast       : Execute accelerated training pipeline (--fast)"
 	@echo "make app        : Launch Streamlit web dashboard"
 	@echo "make test       : Run test suite (pytest -q)"
+	@echo "make demo       : Run automated terminal walkthrough demo"
 	@echo "make clean      : Remove cache files and temporary artifacts"
 
 install:
@@ -24,6 +25,9 @@ app:
 
 test:
 	python -m pytest -q
+
+demo:
+	python scripts/demo_walkthrough.py
 
 clean:
 	find . -type d -name "__pycache__" -exec rm -rf {} +

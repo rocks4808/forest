@@ -85,6 +85,13 @@ python -m pytest -q
 ```
 *Current test suite: **24 passed** across data validation, temporal leakage, feature integrity, multi-year mass balance, AppTest headless pages, and CLI inference.*
 
+### 6. Automated Terminal Walkthrough
+Run the instant command-line walkthrough covering dataset integrity, the mathematical persistence trap, holdout benchmarks, 2025 hotspots, and physical conservation rollouts:
+```bash
+python scripts/demo_walkthrough.py
+# Or: make demo
+```
+
 ---
 
 ## 🗂️ Project Architecture
