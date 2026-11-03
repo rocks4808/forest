@@ -1,5 +1,10 @@
 # CanopyIntel: Forest Loss Prediction & Deforestation Hotspot Prioritization System
 
+[![CI](https://github.com/rocks4808/forest/actions/workflows/ci.yml/badge.svg)](https://github.com/rocks4808/forest/actions/workflows/ci.yml)
+[![Tests](https://img.shields.io/badge/tests-24%20passed-7FB069.svg)](file:///tests/)
+[![Python](https://img.shields.io/badge/python-3.10%20%7C%203.11%20%7C%203.12%20%7C%203.14-blue.svg)](file:///requirements.txt)
+[![Design](https://img.shields.io/badge/impeccable%20UI-0%20anti--patterns-7FB069.svg)](file:///app/style.css)
+
 CanopyIntel is an enterprise-grade environmental intelligence system engineered to predict subnational forest loss rates, classify deforestation severity, project multi-year canopy trajectories (2025–2030), and prioritize high-risk ecological intervention zones.
 
 Built following the rigorous specifications of `PRD.md`, CanopyIntel enforces strict **zero-leakage temporal cross-validation**, residual target modeling, physical mass-balance conservation, and an editorial **Deep Dark Forest** visual design system.
@@ -12,7 +17,9 @@ Built following the rigorous specifications of `PRD.md`, CanopyIntel enforces st
 - **Physical Conservation of Mass:** Guarantees strict mass balance ($\text{Area}_{t+1} = \text{Area}_t - \text{Loss}_t + \text{Gain}_t$) across recursive 2025–2030 forecasts.
 - **Zero Leakage:** Temporal holdout ($\le 2021$ train, 2022 val, 2023–2024 test), 6-fold expanding-window CV, and 5-fold spatial GroupKFold.
 - **Explainable AI (XAI):** Global TreeSHAP summary, beeswarm, feature interaction analysis, and local single-region waterfall attributions.
-- **Editorial Streamlit Dashboard:** 8 comprehensive pages styled with custom Google Fonts (*Fraunces*, *IBM Plex Sans*, *IBM Plex Mono*), a 10x5 schematic tile cartogram, real-time What-If policy simulator, and one-click Executive Brief HTML generator.
+- **Editorial Streamlit Dashboard:** One-shot hackathon showcase and 8 dedicated subpages styled with custom Google Fonts (*Newsreader*, *IBM Plex Sans*, *IBM Plex Mono*), a 10x5 schematic tile cartogram, real-time What-If policy simulator, and one-click Executive Brief HTML generator.
+- **Presentations & Artifacts:** Includes a 10-slide standalone interactive HTML pitch deck (`reports/presentation_slides.html`), an exploratory verification notebook (`notebooks/01_exploratory_data_analysis.ipynb`), and a printable executive briefing (`reports/executive_briefing.html`).
+- **CLI Inference Engine:** Instant terminal predictions for any jurisdiction via `python -m src.predict --top 5`.
 
 ---
 
@@ -56,15 +63,25 @@ python -m src.train
 
 ### 3. Launch Dashboard
 ```bash
-streamlit run app/streamlit_app.py
+python -m streamlit run app/streamlit_app.py
+# Or on Windows, double-click start.bat / run .\start.ps1
 ```
 Open `http://localhost:8501` in your browser.
 
-### 4. Run Test Suite
+### 4. CLI Inference Engine
+```bash
+# Query top 5 highest-risk regions for 2025
+python -m src.predict --top 5
+
+# Query a specific jurisdiction
+python -m src.predict --region R01
+```
+
+### 5. Run Test Suite
 ```bash
 python -m pytest -q
 ```
-*Current test suite: 22 passed across data validation, temporal leakage, feature integrity, multi-year mass balance, and headless Streamlit page tests.*
+*Current test suite: **24 passed** across data validation, temporal leakage, feature integrity, multi-year mass balance, AppTest headless pages, and CLI inference.*
 
 ---
 
