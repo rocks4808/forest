@@ -19,12 +19,14 @@ from app.components import (
     load_historical_data,
     load_hotspots_data,
     load_metrics_data,
+    render_sidebar,
     top_nav_bar,
 )
 
 st.set_page_config(page_title="Executive Brief | CanopyIntel", page_icon="📄", layout="wide")
 apply_custom_css()
 top_nav_bar()
+render_sidebar()
 
 df_hotspots = load_hotspots_data()
 df_hist = load_historical_data()

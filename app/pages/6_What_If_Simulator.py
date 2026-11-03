@@ -24,6 +24,7 @@ from app.components import (
     load_hotspots_data,
     load_metrics_data,
     load_trained_models,
+    render_sidebar,
     tier_badge,
     top_nav_bar,
 )
@@ -32,6 +33,7 @@ from src.features import build_features
 st.set_page_config(page_title="What-If Simulator | CanopyIntel", page_icon="🎛️", layout="wide")
 apply_custom_css()
 top_nav_bar()
+render_sidebar()
 
 df_hist = load_historical_data()
 df_hotspots = load_hotspots_data()

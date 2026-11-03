@@ -23,12 +23,14 @@ from app.components import (
     kpi_card,
     load_metrics_data,
     load_model_comparison,
+    render_sidebar,
     top_nav_bar,
 )
 
 st.set_page_config(page_title="Model Benchmark | CanopyIntel", page_icon="⚖️", layout="wide")
 apply_custom_css()
 top_nav_bar()
+render_sidebar()
 
 df_comp = load_model_comparison()
 metrics = load_metrics_data()

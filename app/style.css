@@ -51,15 +51,97 @@ div[data-testid="stTabs"] div[role="tablist"] {
     gap: 1rem;
 }
 
-/* Hide Streamlit default chrome */
-#MainMenu, footer, header {
-    visibility: hidden;
+/* Hide Streamlit default chrome while keeping sidebar controls accessible */
+#MainMenu, 
+footer, 
+.stDeployButton, 
+div[data-testid="stToolbar"],
+div[data-testid="stDecoration"] {
+    display: none !important;
+    visibility: hidden !important;
 }
-.stDeployButton {
-    display: none;
+
+/* Header container: transparent & pass-through except for sidebar control */
+header[data-testid="stHeader"] {
+    background: transparent !important;
+    color: transparent !important;
+    pointer-events: none !important;
+    z-index: 999990 !important;
+    height: 3rem !important;
 }
-div[data-testid="stToolbar"] {
-    display: none;
+
+/* Re-open / Expand Sidebar Button (when sidebar is closed) */
+header[data-testid="stHeader"] [data-testid="collapsedControl"],
+[data-testid="collapsedControl"],
+div[data-testid="stSidebarCollapsedControl"],
+button[data-testid="stSidebarCollapsedControl"] {
+    visibility: visible !important;
+    display: flex !important;
+    pointer-events: auto !important;
+    position: fixed !important;
+    top: 12px !important;
+    left: 12px !important;
+    z-index: 999999 !important;
+    background: #121E18 !important;
+    border: 1px solid #24382D !important;
+    border-radius: 8px !important;
+    padding: 6px 10px !important;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.6) !important;
+    cursor: pointer !important;
+    transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1) !important;
+}
+
+[data-testid="collapsedControl"]:hover,
+div[data-testid="stSidebarCollapsedControl"]:hover,
+button[data-testid="stSidebarCollapsedControl"]:hover {
+    background: #1B2E24 !important;
+    border-color: #7FB069 !important;
+    box-shadow: 0 6px 20px rgba(127, 176, 105, 0.25) !important;
+    transform: translateY(-1px) scale(1.04) !important;
+}
+
+[data-testid="collapsedControl"] button,
+button[data-testid="stSidebarCollapsedControl"] {
+    color: #7FB069 !important;
+    background: transparent !important;
+    border: none !important;
+    padding: 0 !important;
+    display: flex !important;
+    align-items: center !important;
+    gap: 6px !important;
+    cursor: pointer !important;
+}
+
+[data-testid="collapsedControl"] svg,
+button[data-testid="stSidebarCollapsedControl"] svg {
+    fill: #7FB069 !important;
+    stroke: #7FB069 !important;
+    width: 20px !important;
+    height: 20px !important;
+}
+
+/* Collapse button inside the open sidebar */
+[data-testid="stSidebarCollapseButton"] button {
+    color: #9FB0A4 !important;
+    background: #16241D !important;
+    border: 1px solid #24382D !important;
+    border-radius: 6px !important;
+    padding: 4px 6px !important;
+    transition: all 0.2s ease !important;
+}
+
+[data-testid="stSidebarCollapseButton"] button:hover {
+    color: #7FB069 !important;
+    border-color: #7FB069 !important;
+    background: #1A2C23 !important;
+}
+
+[data-testid="stSidebarCollapseButton"] svg {
+    fill: #9FB0A4 !important;
+}
+
+[data-testid="stSidebarCollapseButton"] button:hover svg {
+    fill: #7FB069 !important;
 }
 div.block-container {
     padding-top: 1.5rem;
@@ -256,12 +338,162 @@ h4, h5, h6 {
 /* Sidebar styling */
 section[data-testid="stSidebar"] {
     background-color: #0B1410 !important;
-    border-right: 1px solid #24382D;
+    border-right: 1px solid #24382D !important;
+    box-shadow: 4px 0 24px rgba(0, 0, 0, 0.4) !important;
 }
+
+section[data-testid="stSidebar"] div[data-testid="stSidebarUserContent"] {
+    padding-top: 1.25rem !important;
+    padding-left: 0.85rem !important;
+    padding-right: 0.85rem !important;
+    padding-bottom: 2rem !important;
+}
+
 section[data-testid="stSidebar"] .stSelectbox label, 
 section[data-testid="stSidebar"] .stSlider label {
     color: #9FB0A4 !important;
-    font-size: 0.85rem;
+    font-size: 0.82rem;
+    font-weight: 500;
+}
+
+/* Sidebar navigation links */
+[data-testid="stSidebarNav"] {
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid #24382D;
+    margin-bottom: 1.2rem;
+}
+
+[data-testid="stSidebarNav"] ul {
+    gap: 4px;
+}
+
+[data-testid="stSidebarNav"] a {
+    border-radius: 6px !important;
+    padding: 0.45rem 0.75rem !important;
+    transition: all 0.15s ease !important;
+    border: 1px solid transparent !important;
+    background: transparent !important;
+}
+
+[data-testid="stSidebarNav"] a span {
+    font-family: 'IBM Plex Sans', sans-serif !important;
+    font-size: 0.88rem !important;
+    color: #9FB0A4 !important;
+}
+
+[data-testid="stSidebarNav"] a:hover {
+    background-color: #16241D !important;
+    border-color: #24382D !important;
+}
+
+[data-testid="stSidebarNav"] a:hover span {
+    color: #E9E6DA !important;
+}
+
+[data-testid="stSidebarNav"] a[aria-current="page"] {
+    background-color: #121E18 !important;
+    border-color: #7FB069 !important;
+    border-left: 3px solid #7FB069 !important;
+}
+
+[data-testid="stSidebarNav"] a[aria-current="page"] span {
+    color: #7FB069 !important;
+    font-weight: 600 !important;
+}
+
+/* Custom Sidebar Component Cards */
+.sidebar-brand-card {
+    background: #121E18;
+    border: 1px solid #24382D;
+    border-radius: 8px;
+    padding: 14px;
+    margin-bottom: 14px;
+}
+.sidebar-brand-title {
+    font-family: 'Newsreader', Georgia, serif;
+    font-size: 1.2rem;
+    color: #E9E6DA;
+    font-weight: 500;
+    line-height: 1.2;
+}
+.sidebar-brand-pill {
+    display: inline-block;
+    background: #16241D;
+    color: #7FB069;
+    border: 1px solid #24382D;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.65rem;
+    padding: 2px 6px;
+    border-radius: 4px;
+    margin-top: 4px;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+}
+.sidebar-kpi-card {
+    background: #121E18;
+    border: 1px solid #24382D;
+    border-radius: 8px;
+    padding: 10px 12px;
+    margin-bottom: 14px;
+}
+.sidebar-kpi-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 6px;
+    margin-top: 6px;
+}
+.sidebar-kpi-tile {
+    background: #16241D;
+    border: 1px solid #24382D;
+    border-radius: 6px;
+    padding: 6px 8px;
+    display: flex;
+    flex-direction: column;
+}
+.sidebar-kpi-val {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: #E9E6DA;
+}
+.sidebar-kpi-lbl {
+    font-family: 'IBM Plex Sans', sans-serif;
+    font-size: 0.66rem;
+    color: #9FB0A4;
+    text-transform: uppercase;
+    letter-spacing: 0.02em;
+}
+.sidebar-inspector-box {
+    background: #121E18;
+    border: 1px solid #24382D;
+    border-radius: 8px;
+    padding: 10px 12px;
+    margin-bottom: 14px;
+}
+.sidebar-status-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.76rem;
+    color: #9FB0A4;
+    margin-bottom: 6px;
+}
+.sidebar-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background-color: #7FB069;
+    box-shadow: 0 0 6px rgba(127, 176, 105, 0.6);
+    flex-shrink: 0;
+}
+.sidebar-footer-card {
+    border-top: 1px solid #24382D;
+    padding-top: 12px;
+    margin-top: 16px;
+    font-size: 0.72rem;
+    color: #6B7F73;
+    line-height: 1.45;
 }
 
 /* Editorial Masthead */

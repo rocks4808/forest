@@ -22,12 +22,14 @@ from app.components import (
     insight_headline,
     load_historical_data,
     load_hotspots_data,
+    render_sidebar,
     top_nav_bar,
 )
 
 st.set_page_config(page_title="Explainability | CanopyIntel", page_icon="💡", layout="wide")
 apply_custom_css()
 top_nav_bar()
+render_sidebar()
 
 df_hotspots = load_hotspots_data()
 df_hist = load_historical_data()

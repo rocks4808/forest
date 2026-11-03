@@ -41,6 +41,7 @@ from app.components import (
     load_model_comparison,
     load_trained_models,
     render_schematic_cartogram,
+    render_sidebar,
     tier_badge,
     top_nav_bar,
 )
@@ -68,6 +69,9 @@ eda_summary = load_eda_summary()
 if df_hist.empty or df_hotspots.empty:
     st.error("Model artifacts or reports not found. Please execute: python -m src.train")
     st.stop()
+
+# Enhanced Sidebar
+selected_region = render_sidebar(df_hist=df_hist, df_hotspots=df_hotspots)
 
 # -------------------------------------------------------------------
 # Editorial Masthead & Value Proposition
@@ -247,7 +251,7 @@ with tab_exec:
     with col_t1_l:
         st.markdown("##### Schematic Regional Risk Cartogram (50 Jurisdictions)")
         st.caption("10×5 matrix arranged for visual screening. Tile hue denotes composite risk score (0–100 scale).")
-        render_schematic_cartogram(df_hotspots)
+        render_schematic_cartogram(df_hotspots, selected_region=selected_region)
         chart_caption("Schematic cartogram: five jurisdictions (R44, R12, R38, R23, R17) are flagged in the Critical tier requiring prioritized ranger deployment.")
 
     with col_t1_r:

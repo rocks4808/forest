@@ -23,12 +23,14 @@ from app.components import (
     kpi_card,
     load_forecast_data,
     load_historical_data,
+    render_sidebar,
     top_nav_bar,
 )
 
 st.set_page_config(page_title="2025-2030 Forecast | CanopyIntel", page_icon="🔮", layout="wide")
 apply_custom_css()
 top_nav_bar()
+render_sidebar()
 
 df_hist = load_historical_data()
 df_forecast = load_forecast_data()

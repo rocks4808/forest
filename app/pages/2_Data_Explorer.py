@@ -22,12 +22,14 @@ from app.components import (
     insight_headline,
     load_eda_summary,
     load_historical_data,
+    render_sidebar,
     top_nav_bar,
 )
 
 st.set_page_config(page_title="Data Explorer | CanopyIntel", page_icon="🔍", layout="wide")
 apply_custom_css()
 top_nav_bar()
+render_sidebar()
 
 df = load_historical_data()
 eda_summary = load_eda_summary()

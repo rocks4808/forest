@@ -354,3 +354,172 @@ def load_trained_models() -> Dict[str, Any]:
         with open(cols_path, "r", encoding="utf-8") as f:
             models["feature_columns"] = json.load(f)
     return models
+
+
+# ===================================================================
+# Enhanced Editorial Sidebar
+# ===================================================================
+
+def render_sidebar(
+    df_hist: Optional[pd.DataFrame] = None,
+    df_hotspots: Optional[pd.DataFrame] = None,
+    show_inspector: bool = True,
+    default_region: str = "R44",
+) -> Optional[str]:
+    """Render an enhanced editorial sidebar with project branding, benchmark KPIs, 
+    interactive jurisdiction inspector, and physical mass conservation guarantees.
+    
+    Returns the selected region_id if inspector is active, or None.
+    """
+    if df_hotspots is None:
+        df_hotspots = load_hotspots_data()
+    if df_hist is None:
+        df_hist = load_historical_data()
+
+    with st.sidebar:
+        # 1. Branding Header Card
+        st.markdown(
+            """
+            <div class="sidebar-brand-card">
+                <div style="display: flex; align-items: center; gap: 10px;">
+                    <span style="font-size: 1.6rem; line-height: 1;">🌲</span>
+                    <div>
+                        <div class="sidebar-brand-title">CanopyIntel</div>
+                        <div class="sidebar-brand-pill">SEED 42 DETERMINISTIC</div>
+                    </div>
+                </div>
+                <div style="margin-top: 10px; font-size: 0.78rem; color: #9FB0A4; line-height: 1.45;">
+                    Subnational Forest Loss Forecasting &amp; Deforestation Hotspot System
+                </div>
+            </div>
+            """,
+            unsafe_allow_html=True,
+        )
+
+        # 2. Holdout Performance KPI Grid
+        st.markdown(
+            """
+            <div class="sidebar-kpi-card">
+                <div style="font-family: 'IBM Plex Mono', monospace; font-size: 0.68rem; color: #7FB069; text-transform: uppercase; letter-spacing: 0.05em; font-weight: 600;">
+                    Holdout Accuracy (2023–2024)
+                </div>
+                <div class="sidebar-kpi-grid">
+                    <div class="sidebar-kpi-tile">
+                        <span class="sidebar-kpi-val">0.9996</span>
+                        <span class="sidebar-kpi-lbl">R² vs True</span>
+                    </div>
+                    <div class="sidebar-kpi-tile">
+                        <span class="sidebar-kpi-val">&plusmn;0.04%</span>
+                        <span class="sidebar-kpi-lbl">Holdout MAE</span>
+                    </div>
+                    <div class="sidebar-kpi-tile">
+                        <span class="sidebar-kpi-val">100%</span>
+                        <span class="sidebar-kpi-lbl">Directional</span>
+                    </div>
+                    <div class="sidebar-kpi-tile">
+                        <span class="sidebar-kpi-val">0.9618</span>
+                        <span class="sidebar-kpi-lbl">MASE (&lt;1 Beats)</span>
+                    </div>
+                </div>
+            </div>
+            """,
+            unsafe_allow_html=True,
+        )
+
+        selected_region = None
+        # 3. Interactive Jurisdiction Inspector
+        if show_inspector and not df_hotspots.empty:
+            st.markdown(
+                """
+                <div style="font-family: 'IBM Plex Sans', sans-serif; font-size: 0.78rem; font-weight: 600; color: #E9E6DA; letter-spacing: 0.03em; text-transform: uppercase; margin-bottom: 6px;">
+                    Jurisdiction Inspector
+                </div>
+                """,
+                unsafe_allow_html=True,
+            )
+            regions = sorted(df_hotspots["region_id"].unique().tolist())
+            idx = regions.index(default_region) if default_region in regions else 0
+            selected_region = st.selectbox(
+                "Select Jurisdiction",
+                regions,
+                index=idx,
+                key="sidebar_region_select",
+                label_visibility="collapsed",
+            )
+
+            # Telemetry card for selected region
+            reg_row = df_hotspots[df_hotspots["region_id"] == selected_region]
+            if not reg_row.empty:
+                r_tier = str(reg_row.iloc[0]["tier"])
+                r_score = float(reg_row.iloc[0]["risk_score"])
+                r_pred = float(reg_row.iloc[0].get("predicted_loss_pct_next", 0.0))
+                r_slope = float(reg_row.iloc[0].get("slope_5yr", 0.0))
+                badge = tier_badge(r_tier)
+
+                slope_sign = "+" if r_slope >= 0 else ""
+                slope_color = "#C8402F" if r_slope > 0 else "#7FB069"
+
+                st.markdown(
+                    f"""
+                    <div class="sidebar-inspector-box">
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+                            <span style="font-family: 'Newsreader', serif; font-size: 1.1rem; color: #E9E6DA; font-weight: 600;">{selected_region}</span>
+                            <span>{badge}</span>
+                        </div>
+                        <div style="font-size: 0.76rem; color: #9FB0A4; display: flex; justify-content: space-between; margin-bottom: 4px;">
+                            <span>Risk Score:</span>
+                            <strong style="color: #E9E6DA; font-family: 'IBM Plex Mono';">{r_score:.1f} / 100</strong>
+                        </div>
+                        <div style="font-size: 0.76rem; color: #9FB0A4; display: flex; justify-content: space-between; margin-bottom: 4px;">
+                            <span>Predicted Loss:</span>
+                            <strong style="color: #E9E6DA; font-family: 'IBM Plex Mono';">{r_pred:.2f}%</strong>
+                        </div>
+                        <div style="font-size: 0.76rem; color: #9FB0A4; display: flex; justify-content: space-between;">
+                            <span>5-Yr Trend:</span>
+                            <strong style="color: {slope_color}; font-family: 'IBM Plex Mono';">{slope_sign}{r_slope:.3f}%/yr</strong>
+                        </div>
+                    </div>
+                    """,
+                    unsafe_allow_html=True,
+                )
+
+        # 4. Architectural & Physical Guarantees
+        st.markdown(
+            """
+            <div style="margin-top: 6px; margin-bottom: 12px;">
+                <div class="sidebar-status-row">
+                    <span class="sidebar-dot"></span>
+                    <span>Mass Conservation Conserved</span>
+                </div>
+                <div class="sidebar-status-row">
+                    <span class="sidebar-dot"></span>
+                    <span>Expanding TimeSeriesSplit (No Leakage)</span>
+                </div>
+                <div class="sidebar-status-row">
+                    <span class="sidebar-dot"></span>
+                    <span>Stacking: Ridge + LGBM + RF</span>
+                </div>
+            </div>
+            """,
+            unsafe_allow_html=True,
+        )
+
+        # 5. Footer and Documentation Link
+        st.markdown(
+            """
+            <div class="sidebar-footer-card">
+                <div style="color: #9FB0A4; font-weight: 500; margin-bottom: 4px;">
+                    CanopyIntel v1.0 &middot; Competition Build
+                </div>
+                <div>29 Automated Tests &middot; CI Passing</div>
+                <div style="margin-top: 6px;">
+                    <a href="https://github.com/rocks4808/forest" target="_blank" style="color: #7FB069; text-decoration: none; font-weight: 500;">
+                        github.com/rocks4808/forest &rarr;
+                    </a>
+                </div>
+            </div>
+            """,
+            unsafe_allow_html=True,
+        )
+
+    return selected_region

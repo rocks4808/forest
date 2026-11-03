@@ -25,6 +25,7 @@ from app.components import (
     load_hotspots_data,
     load_metrics_data,
     render_schematic_cartogram,
+    render_sidebar,
     top_nav_bar,
 )
 
@@ -39,6 +40,8 @@ metrics = load_metrics_data()
 if df_hist.empty or df_hotspots.empty:
     st.warning("Data not loaded. Run `python -m src.train`.")
     st.stop()
+
+selected_region = render_sidebar(df_hist=df_hist, df_hotspots=df_hotspots)
 
 latest_yr = int(df_hist["year"].max())
 critical_n = int((df_hotspots["tier"] == "Critical").sum())
@@ -78,4 +81,4 @@ with col_chart:
     chart_caption("Every single recorded year exhibits net negative forest balance, though policy interventions from 2016 reduced net deforestation rates.")
 
 with col_carto:
-    render_schematic_cartogram(df_hotspots)
+    render_schematic_cartogram(df_hotspots, selected_region=selected_region)

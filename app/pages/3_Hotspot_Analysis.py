@@ -23,6 +23,7 @@ from app.components import (
     load_historical_data,
     load_hotspots_data,
     render_schematic_cartogram,
+    render_sidebar,
     top_nav_bar,
 )
 
@@ -37,6 +38,8 @@ if df_hotspots.empty or df_hist.empty:
     st.warning("Hotspots or historical data not found. Please run `python -m src.train`.")
     st.stop()
 
+selected_region = render_sidebar(df_hist=df_hist, df_hotspots=df_hotspots)
+
 # Computed headline
 top_hotspot = df_hotspots.iloc[0]
 n_critical = int((df_hotspots["tier"] == "Critical").sum())
@@ -47,9 +50,10 @@ insight_headline(
     f"Across all regions, {n_critical} are Critical and {n_accel} display accelerating 5-year degradation trends."
 )
 
-tab_rank, tab_heatmap, tab_scatter, tab_clusters = st.tabs([
+tab_rank, tab_carto, tab_heatmap, tab_scatter, tab_clusters = st.tabs([
     "🏆 Risk Leaderboard",
-    "🗺️ Region × Year Heatmap",
+    "🗺️ 10×5 Risk Cartogram",
+    "📊 Region × Year Heatmap",
     "🫧 Risk vs. Scale Matrix",
     "🧩 Structural Archetypes",
 ])
@@ -105,7 +109,16 @@ with tab_rank:
     st.download_button("📥 Download Hotspots CSV", csv_bytes, "hotspots.csv", "text/csv")
 
 # -------------------------------------------------------------------
-# Tab 2: Region x Year Heatmap
+# Tab 2: 10x5 Schematic Risk Cartogram
+# -------------------------------------------------------------------
+with tab_carto:
+    st.markdown("##### Schematic Regional Risk Cartogram (10 &times; 5 Grid)")
+    st.caption("10×5 matrix arranged for spatial pattern discovery. Select any jurisdiction in the sidebar to highlight it.")
+    render_schematic_cartogram(df_hotspots, selected_region=selected_region)
+    chart_caption("Schematic cartogram: Critical and High risk jurisdictions are clustered with warm and hot tones (orange and crimson) for rapid inspection.")
+
+# -------------------------------------------------------------------
+# Tab 3: Region x Year Heatmap
 # -------------------------------------------------------------------
 with tab_heatmap:
     st.markdown("##### Historical Loss Intensity (Sorted by 2025 Risk)")
