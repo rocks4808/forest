@@ -29,6 +29,9 @@ test:
 demo:
 	python scripts/demo_walkthrough.py
 
+package:
+	python scripts/package_submission.py
+
 clean:
 	find . -type d -name "__pycache__" -exec rm -rf {} +
 	find . -type f -name "*.pyc" -delete

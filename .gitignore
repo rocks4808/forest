@@ -30,3 +30,4 @@ htmlcov/
 skills-lock.json
 brag-output/
 *.lnk
+dist/
