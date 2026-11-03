@@ -152,3 +152,4 @@ When we roll our model forward 6 years under different global scenarios, the pol
 > *Our model achieves an out-of-sample Test MAE of **0.0932%** and an $R^2$ of **0.949**, strictly beating the persistence baseline with 95% bootstrap confidence. On severity classification, it delivers a **0.772 Macro-F1** with **100% adjacent-class accuracy**, guaranteeing zero dangerous false negatives.*
 >
 > *Everything is governed by physical conservation of mass, verified across 22 automated tests with zero data leakage, and deployed on an interactive editorial console featuring real-time What-If policy simulation."*
+
