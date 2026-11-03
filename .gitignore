@@ -29,3 +29,4 @@ htmlcov/
 .opencode/
 skills-lock.json
 brag-output/
+*.lnk
