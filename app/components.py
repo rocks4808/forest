@@ -181,34 +181,96 @@ def get_plotly_theme() -> go.layout.Template:
 def render_schematic_cartogram(
     hotspots_df: pd.DataFrame,
     selected_region: Optional[str] = None,
+    show_header: bool = False,
 ) -> None:
-    """Render a 10 x 5 schematic tile cartogram of 50 regions labeled honestly as schematic layout."""
-    st.markdown("##### Schematic Regional Risk Cartogram (10 &times; 5 Grid)")
-    st.caption("*Schematic layout for comparative visual screening — not geographic coordinates.*")
+    """Render an interactive 10 x 5 schematic tile cartogram using Plotly Heatmap.
+    
+    Labeled honestly as schematic layout for visual comparison — not geographic coordinates.
+    """
+    if show_header:
+        st.markdown("##### Schematic Regional Risk Cartogram (10 &times; 5 Grid)")
+        st.caption("*Schematic layout for comparative screening — not geographic coordinates.*")
 
-    # Sort regions R01 to R50
     sorted_df = hotspots_df.sort_values("region_id").reset_index(drop=True)
-    tiles_html = ['<div class="tile-grid">']
 
-    for _, row in sorted_df.iterrows():
-        r_id = row["region_id"]
-        tier = row["tier"]
-        score = row["risk_score"]
-        color = RISK_COLORS.get(tier, "#7FB069")
-        
-        is_sel = (r_id == selected_region)
-        border_style = f"border: 2px solid #E9E6DA; background-color: rgba({int(color[1:3], 16)}, {int(color[3:5], 16)}, {int(color[5:7], 16)}, 0.35);" if is_sel else f"border: 1px solid #24382D; background-color: rgba({int(color[1:3], 16)}, {int(color[3:5], 16)}, {int(color[5:7], 16)}, 0.15);"
+    cols = 10
+    rows = 5
 
-        tiles_html.append(
-            f"""
-            <div class="tile-cell" style="{border_style}" title="{r_id} | Risk: {score:.1f} ({tier}) | Pred Loss: {row['predicted_loss_pct_next']:.2f}%">
-                <div class="tile-id" style="color: {color};">{r_id}</div>
-                <div class="tile-score">{score:.0f}</div>
-            </div>
-            """
-        )
-    tiles_html.append("</div>")
-    st.markdown("".join(tiles_html), unsafe_allow_html=True)
+    z_matrix = np.zeros((rows, cols))
+    text_matrix = []
+    hover_matrix = []
+
+    for r in range(rows):
+        row_text = []
+        row_hover = []
+        for c in range(cols):
+            idx = r * cols + c
+            if idx < len(sorted_df):
+                row = sorted_df.iloc[idx]
+                r_id = str(row["region_id"])
+                score = float(row["risk_score"])
+                tier = str(row["tier"])
+                pred_loss = float(row.get("predicted_loss_pct_next", 0.0))
+                slope = float(row.get("slope_5yr", 0.0))
+
+                y_idx = rows - 1 - r
+                z_matrix[y_idx, c] = score
+
+                sel_mark = " *" if r_id == selected_region else ""
+                row_text.append(f"<b>{r_id}{sel_mark}</b><br>{score:.0f}")
+                row_hover.append(
+                    f"<b>Jurisdiction: {r_id}</b><br>"
+                    f"Risk Score: <b>{score:.1f}</b> / 100<br>"
+                    f"Severity Tier: <b>{tier}</b><br>"
+                    f"Predicted Loss: <b>{pred_loss:.2f}%</b><br>"
+                    f"5-Yr Trend: <b>{slope:+.3f}%/yr</b><extra></extra>"
+                )
+            else:
+                row_text.append("")
+                row_hover.append("")
+        text_matrix.append(row_text)
+        hover_matrix.append(row_hover)
+
+    # Invert for bottom-to-top layout in Plotly
+    text_matrix = text_matrix[::-1]
+    hover_matrix = hover_matrix[::-1]
+
+    # Risk ramp colorscale: Low (green) -> Mod (yellow) -> High (orange) -> Crit (red)
+    risk_colorscale = [
+        [0.0, "#1A2C23"],
+        [0.25, "#3D5A47"],
+        [0.45, "#7FB069"],
+        [0.65, "#D9B84A"],
+        [0.80, "#E07A3F"],
+        [1.0, "#C8402F"],
+    ]
+
+    fig = go.Figure(data=go.Heatmap(
+        z=z_matrix,
+        text=text_matrix,
+        texttemplate="%{text}",
+        textfont=dict(family="IBM Plex Mono", size=10, color="#E9E6DA"),
+        hoverinfo="text",
+        hovertext=hover_matrix,
+        colorscale=risk_colorscale,
+        zmin=0,
+        zmax=100,
+        xgap=4,
+        ygap=4,
+        showscale=False,
+    ))
+
+    fig.update_xaxes(showticklabels=False, showgrid=False, zeroline=False, fixedrange=True)
+    fig.update_yaxes(showticklabels=False, showgrid=False, zeroline=False, fixedrange=True)
+    fig.update_layout(
+        template=get_plotly_theme(),
+        height=280,
+        margin=dict(l=4, r=4, t=6, b=6),
+        paper_bgcolor="rgba(0,0,0,0)",
+        plot_bgcolor="rgba(0,0,0,0)",
+    )
+
+    st.plotly_chart(fig, width="stretch")
 
 
 # ===================================================================

@@ -246,12 +246,13 @@ with tab_exec:
     
     with col_t1_l:
         st.markdown("##### Schematic Regional Risk Cartogram (50 Jurisdictions)")
-        st.caption("10×5 matrix arranged for visual inspection. Tile hue denotes composite risk tier (0–100 score).")
+        st.caption("10×5 matrix arranged for visual screening. Tile hue denotes composite risk score (0–100 scale).")
         render_schematic_cartogram(df_hotspots)
         chart_caption("Schematic cartogram: five jurisdictions (R44, R12, R38, R23, R17) are flagged in the Critical tier requiring prioritized ranger deployment.")
 
     with col_t1_r:
         st.markdown("##### Top 5 Critical Deforestation Hotspots (2025 Focus)")
+        st.caption("Prioritized jurisdictions requiring urgent conservation enforcement.")
         top_hot = df_hotspots.sort_values("risk_score", ascending=False).head(5)
         display_top = top_hot[["region_id", "risk_score", "tier", "predicted_loss_pct_next", "slope_5yr", "policy_active"]].copy()
         display_top.columns = ["Region", "Risk Score", "Tier", "Pred Loss %", "5-Yr Slope (%/yr)", "Policy"]
@@ -268,13 +269,15 @@ with tab_exec:
             }
         )
 
-        st.markdown("##### National Gross Forest Loss vs Regrowth (2005–2024)")
-        annual = df_hist.groupby("year").agg({"loss_ha": "sum", "gain_ha": "sum"}).reset_index()
-        fig_ann = go.Figure()
-        fig_ann.add_trace(go.Bar(x=annual["year"], y=annual["loss_ha"] / 1e3, name="Deforestation Loss (k ha)", marker_color="#C8402F", opacity=0.85))
-        fig_ann.add_trace(go.Bar(x=annual["year"], y=annual["gain_ha"] / 1e3, name="Regrowth / Gain (k ha)", marker_color="#7FB069", opacity=0.85))
-        fig_ann.update_layout(template=get_plotly_theme(), barmode="group", height=240, margin=dict(l=30, r=20, t=10, b=30))
-        st.plotly_chart(fig_ann, width="stretch")
+    st.markdown("<br>", unsafe_allow_html=True)
+    st.markdown("##### National Gross Forest Loss vs Regrowth Dynamics (2005–2024)")
+    annual = df_hist.groupby("year").agg({"loss_ha": "sum", "gain_ha": "sum"}).reset_index()
+    fig_ann = go.Figure()
+    fig_ann.add_trace(go.Bar(x=annual["year"], y=annual["loss_ha"] / 1e3, name="Deforestation Loss (k ha)", marker_color="#C8402F", opacity=0.85))
+    fig_ann.add_trace(go.Bar(x=annual["year"], y=annual["gain_ha"] / 1e3, name="Regrowth / Gain (k ha)", marker_color="#7FB069", opacity=0.85))
+    fig_ann.update_layout(template=get_plotly_theme(), barmode="group", height=280, margin=dict(l=40, r=20, t=10, b=30), yaxis_title="Annual Hectares (Thousands)")
+    st.plotly_chart(fig_ann, width="stretch")
+    chart_caption("Annual canopy loss consistently outpaces natural regeneration, with structural policy effects moderating losses from 2016 onwards.")
 
 # ===================================================================
 # Tab 2: Model Leaderboard & Validation Metrics
